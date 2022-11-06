@@ -12,8 +12,10 @@ class Orders extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-    public function cartproduct()
+    // has many relation
+    protected $with = ['product'];
+    public function product()
     {
-        return $this->hasMany(Products::class,'id');
+        return $this->belongsTo(Products::class,'product_id','id');
     }
 }

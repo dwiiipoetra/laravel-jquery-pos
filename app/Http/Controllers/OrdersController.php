@@ -24,9 +24,8 @@ class OrdersController extends Controller
             return redirect()->route('orders.index')->with('message','Produk belum dipilih');
         }
 
-        // check product status & qty
-        $product_check = Orders::where('id',$r->product_id)->where('status','0')->first();
-        // $product_check = Orders::where('product_id',$r->product_id);
+        // check if exist product status & qty
+        $product_check = Orders::where('product_id',$r->product_id)->where('status','0')->first();
         // select product price
         $price = Products::where('id',$r->product_id)->first();
 
@@ -43,6 +42,6 @@ class OrdersController extends Controller
         $order->subtotal += $price->price * $r->qty;
         $order->user_id = Auth::user()->id;
         $order->save();
-        return view('orders.index');
+        return redirect()->route('orders.index');
     }
 }

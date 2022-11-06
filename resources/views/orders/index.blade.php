@@ -10,7 +10,9 @@
             <button class="close">
                 <span>&times;</span>
             </button>
-            <strong>{{$message}}</strong>
+            <div class="p-3 mb-2 bg-danger text-white">
+                <strong>{{$message}}</strong>
+            </div>
         </div>
         @endif
 
@@ -64,22 +66,25 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($cart_items as $cart)
-                                            @foreach($cart->cartproduct as $cp)
-                                                <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$cp->name}}</td>
-                                                    <td>{{$cart->qty}}</td>
-                                                    <td>{{$cart->subtotal}}</td>
-                                                </tr>
-                                            @endforeach
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$cart->product->name}}</td>
+                                                <td>{{$cart->qty}}</td>
+                                                <td>{{$cart->subtotal}}</td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <br/>
+                            
                             <div class="text-right">
-                                <p class="h5">Total Price : IDR</p>
-                            </div>
+                            @if ($cart_items)
+                                <p class="h5">Total Price : IDR {{$cart_items->sum('subtotal')}}</p>
+                            @else
+                                <p class="h5">Total Price : 0</p>
+                            @endif
+                            
                             <br/>
                             <div class="card-footer text-right">
                                 <a href="#" class="btn btn-primary">

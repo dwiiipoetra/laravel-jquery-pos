@@ -25,9 +25,8 @@ use Illuminate\Support\Facades\Route;
     // Route::get('/products', [ProductsController::class,'index'])->name('products.index');
     Route::resource('/products', ProductsController::class)->middleware(['auth', 'verified']);
     // Orders
-    // Route::resource('/orders', OrdersController::class);
+    Route::post('/orders', [OrdersController::class,'store'])->middleware(['auth', 'verified'])->name('orders.store');
     Route::resource('/orders', OrdersController::class)->middleware(['auth', 'verified']);
-
-    Auth::routes();
-
+    // Home
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Auth::routes();
