@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orders;
+use App\Models\OrdersDetail;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,8 @@ class OrdersController extends Controller
         $products = Products::all();
         $orders = Orders::all();
         // get cart item by user login
-        $cart_items = Orders::where('user_id',Auth::user()->id)->where('status','0')->get();
-        return view('orders.index', compact('products','orders','cart_items'));
+        // $cart_items = OrdersDetail::where('order_id',4)->get();
+        return view('orders.index', compact('products','orders'));
     }
 
     public function store(Request $r){

@@ -15,7 +15,7 @@ class OrdersDetailController extends Controller
         }
 
         // check if exist product status & qty
-        $product_check = OrdersDetail::where('product_id',$r->product_id)->first();
+        $product_check = OrdersDetail::where('product_id',$r->product_id)->where('order_id',$r->order_id)->first();
         // select product price
         $price = Products::where('id',$r->product_id)->first();
 
@@ -24,14 +24,16 @@ class OrdersDetailController extends Controller
             $order_detail->product_id = $r->product_id;
             $order_detail->qty = $r->qty;
             $order_detail->order_id = $r->order_id;
-        }else{
+            // $order_detail->subtotal = $price->sell_price * $r->qty;
+        }
+        else{
             // if product exist then update qty
-            $order_detail = OrdersDetail::where('product_id', $r->product_id)->first();
+            $order_detail = OrdersDetail::where('product_id', $r->product_id)->where('order_id',$r->order_id)->first();
             $order_detail->product_id = $r->product_id;
             $order_detail->qty += $r->qty;
         }
-        $order_detail->subtotal += $price->sell_price * $r->qty;
-        $order_detail->save();
+            $order_detail->subtotal += $price->sell_price * $r->qty;
+            $order_detail->save();
         return redirect()->route('orders.index');
     }
 }

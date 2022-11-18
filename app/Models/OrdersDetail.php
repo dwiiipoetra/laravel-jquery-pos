@@ -14,9 +14,15 @@ class OrdersDetail extends Model
     protected $guarded = [];
 
     // has many relation
-    protected $with = ['orders'];
+    protected $with = ['orders','product'];
     public function orders()
     {
         return $this->belongsTo(Orders::class,'order_id','id');
+    }
+
+    // has many relation
+    public function product()
+    {
+        return $this->belongsTo(Products::class,'product_id','id');
     }
 }

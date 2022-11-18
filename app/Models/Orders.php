@@ -12,11 +12,4 @@ class Orders extends Model
     protected $table = 'orders';
     protected $primaryKey = 'id';
     protected $guarded = [];
-
-    // has many relation
-    protected $with = ['product'];
-    public function product()
-    {
-        return $this->belongsTo(Products::class,'product_id','id');
-    }
 }
