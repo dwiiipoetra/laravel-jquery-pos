@@ -11,37 +11,22 @@ class OrdersController extends Controller
 {
     
     public function index(){
-        // pass product data
+        // pass product & order data
         $products = Products::all();
+        $orders = Orders::all();
         // get cart item by user login
         $cart_items = Orders::where('user_id',Auth::user()->id)->where('status','0')->get();
-        return view('orders.index', compact('products','cart_items'));
+        return view('orders.index', compact('products','orders','cart_items'));
     }
 
     public function store(Request $r){
-        // from select name
-        if($r->product_id == 0){
-            return redirect()->route('orders.index')->with('message','Produk belum dipilih');
-        }
-
-        // check if exist product status & qty
-        $product_check = Orders::where('product_id',$r->product_id)->where('status','0')->first();
-        // select product price
-        $price = Products::where('id',$r->product_id)->first();
-
-        // dd($product_check);
-        if($product_check == null){
-            $order = new Orders;
-            $order->product_id = $r->product_id;
-            $order->qty = $r->qty;
-        }else{
-            $order = Orders::where('product_id', $r->product_id)->where('status','0')->first();
-            $order->product_id = $r->product_id;
-            $order->qty += $r->qty;
-        }
-        $order->subtotal += $price->price * $r->qty;
+        $order = new Orders();
+        // $tesid = Orders::latest()->id->get();
+        $order->no_faktur = "INV-000";
+        $order->consumer_name = $r->consumer_name;
         $order->user_id = Auth::user()->id;
         $order->save();
+        
         return redirect()->route('orders.index');
     }
 }

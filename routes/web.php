@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\OrdersDetailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +22,10 @@ use Illuminate\Support\Facades\Route;
     });
 
     // Products
-    // Route::resource('/products', ProductsController::class);
-    // Route::get('/products', [ProductsController::class,'index'])->name('products.index');
     Route::resource('/products', ProductsController::class)->middleware(['auth', 'verified']);
     // Orders
     Route::post('/orders', [OrdersController::class,'store'])->middleware(['auth', 'verified'])->name('orders.store');
+    Route::post('/ordersdetail', [OrdersDetailController::class,'store'])->middleware(['auth', 'verified'])->name('ordersdetail.store');
     Route::resource('/orders', OrdersController::class)->middleware(['auth', 'verified']);
     // Home
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

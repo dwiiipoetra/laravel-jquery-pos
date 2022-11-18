@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
-            $table->integer('product_id')->unsigned();
-            $table->integer('qty')->unsigned()->default(0);
-            $table->integer('subtotal')->unsigned()->default(0);
-            $table->integer('status')->unsigned()->default(0);
             $table->timestamps();
+            $table->string('no_faktur');
+            $table->string('consumer_name');
+            $table->integer('user_id')->unsigned();
+            $table->integer('status')->unsigned()->default(0);
         });
     }
 
