@@ -15,8 +15,6 @@ class OrdersController extends Controller
         // pass product & order data
         $products = Products::all();
         $orders = Orders::all();
-        // get cart item by user login
-        // $cart_items = OrdersDetail::where('order_id',4)->get();
         return view('orders.index', compact('products','orders'));
     }
 
@@ -29,5 +27,10 @@ class OrdersController extends Controller
         $order->save();
         
         return redirect()->route('orders.index');
+    }
+
+    public function show($id){
+        $orders_detail = OrdersDetail::where('order_id',$id)->get();
+        return view('orders.show', compact('orders_detail'));
     }
 }

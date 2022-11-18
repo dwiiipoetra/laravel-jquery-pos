@@ -24,7 +24,6 @@ class OrdersDetailController extends Controller
             $order_detail->product_id = $r->product_id;
             $order_detail->qty = $r->qty;
             $order_detail->order_id = $r->order_id;
-            // $order_detail->subtotal = $price->sell_price * $r->qty;
         }
         else{
             // if product exist then update qty
